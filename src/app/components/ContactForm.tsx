@@ -1,9 +1,8 @@
-// src/components/ContactForm.tsx
-"use client"; // <-- Add this at the very top of the file
+
+"use client"; 
 
 import { useState } from "react";
 
-// Define the shape of the formData object
 interface FormData {
   name: string;
   email: string;
@@ -12,7 +11,7 @@ interface FormData {
   message: string;
 }
 
-export default function ContactForm() {
+export  function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -32,7 +31,7 @@ export default function ContactForm() {
   };
 
   const validateForm = () => {
-    let formErrors: { [key: string]: string } = {};
+    const formErrors: { [key: string]: string } = {};
     if (!formData.name) formErrors["name"] = "Name is required.";
     if (!formData.email) formErrors["email"] = "Email is required.";
     if (!formData.message) formErrors["message"] = "Message is required.";
@@ -81,14 +80,15 @@ export default function ContactForm() {
         />
 
         <select
-          name="licenseType"
-          value={formData.licenseType}
-          onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
-        >
-          <option value="Software">Software License</option>
-          <option value="Other">Other</option>
-        </select>
+  name="licenseType"
+  value={formData.licenseType}
+  onChange={handleInputChange}
+  className="w-full p-2 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+>
+  <option value="Software">Software License</option>
+  <option value="Other">Other</option>
+</select>
+
 
         <textarea
           name="message"

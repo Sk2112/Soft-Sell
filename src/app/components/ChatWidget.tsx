@@ -1,95 +1,122 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useFetchBot } from '../api';
 
-export default function ChatWidget() {
-  const [messages, setMessages] = useState<{ user: string; bot: string }[]>([]);
-  const [input, setInput] = useState("");
-  const [isOpen, setIsOpen] = useState(false); // State to manage chat visibility
+export function ChatWidget() {
+  const [messages, setMessages] = useState<{ sender: 'user' | 'bot'; text: string }[]>([]);
+  const [input, setInput] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false); 
+  const { fetchBotResponse } = useFetchBot();
 
   const handleSendMessage = async () => {
-    const userMessage = input;
-    setMessages([...messages, { user: userMessage, bot: "..." }]);
-    setInput("");
+    if (!input.trim()) return;
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: userMessage }),
-    });
+    const userMessage = input.trim();
+    setMessages((prev) => [...prev, { sender: 'user', text: userMessage }]);
+    setInput('');
+    setLoading(true); 
 
-    const data = await response.json();
-    setMessages([...messages, { user: userMessage, bot: data.reply }]);
+    const botReply = await fetchBotResponse(userMessage);
+    setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
+    setLoading(false); 
   };
 
-  // Toggle chat box visibility
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleChat = () => setIsOpen(!isOpen);
+
+  const closeChat = () => setIsOpen(false);
 
   return (
     <div>
-      {/* Chat Bot Trigger Button */}
-      <div className="fixed bottom-5 right-5">
-        <button
-          onClick={toggleChat}
-          className="p-3 bg-purple-600 rounded-full text-white shadow-lg focus:outline-none hover:bg-purple-700"
-        >
-          <span className="text-xl">💬</span> {/* You can replace this with an image/icon */}
-        </button>
-      </div>
-
-      {/* Chat Widget UI */}
-      {isOpen && (
-        <div className="fixed bottom-5 right-5 w-[350px] max-w-full p-4 bg-blue-700 text-white rounded-lg shadow-lg">
-          {/* Chat Bot Label */}
-          <div className="text-center mb-4">
-            <label className="text-2xl font-bold text-white-500">Your Chat Bot</label>
-          </div>
-
-          <div className="space-y-4 overflow-y-auto max-h-[400px]">
-            {messages.map((message, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="space-y-2 mb-2">
-                  <div className="text-sm font-semibold">You:</div>
-                  <div className="bg-gray-800 p-3 rounded-lg shadow-sm">
-                    {message.user}
-                  </div>
-                  <div className="text-sm font-semibold">Bot:</div>
-                  <div className="bg-gray-700 p-3 rounded-lg shadow-sm">
-                    {message.bot}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-4 flex">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="p-3 rounded-l-lg w-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white-500"
-              placeholder="Ask a question..."
-            />
-            <button
-              onClick={handleSendMessage}
-              className="p-3 bg-green-600 hover:bg-green-500 text-white rounded-r-lg transition duration-200 ease-in-out"
-            >
-              Send
-            </button>
-          </div>
+      {/* Trigger Button */}
+      {!isOpen && (
+        <div className="fixed bottom-5 right-5 z-50">
+          <button
+            onClick={toggleChat}
+            className="p-4 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full text-white shadow-xl transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50"
+          >
+            <span className="text-lg font-semibold">Chat</span>
+          </button>
         </div>
       )}
+
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="chat-box"
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className="fixed bottom-5 right-5 w-[350px] max-w-full p-4 bg-blue-700 text-white rounded-lg shadow-lg z-40"
+          >
+            <button
+              onClick={closeChat}
+              className="absolute top-2 right-2 text-2xl text-white focus:outline-none"
+            >
+              &times;
+            </button>
+
+            <div className="text-center mb-4">
+              <label className="text-2xl font-bold">Your Chat Bot</label>
+            </div>
+
+            <div className="space-y-4 overflow-y-auto max-h-[400px] pr-2">
+              {messages.map((message, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-1"
+                >
+                  <div className="text-sm font-semibold text-gray-200">
+                    {message.sender === 'user' ? 'You' : 'Bot'}:
+                  </div>
+                  <div
+                    className={`p-3 rounded-lg shadow-sm ${
+                      message.sender === 'user' ? 'bg-gray-800' : 'bg-gray-700'
+                    }`}
+                  >
+                    {message.text}
+                  </div>
+                </motion.div>
+              ))}
+              {loading && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-sm text-center text-gray-300"
+                >
+                  Typing...
+                </motion.div>
+              )}
+            </div>
+
+            <div className="mt-4 flex">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && !loading && handleSendMessage()} // Disable enter if loading
+                className="p-3 rounded-l-lg w-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                placeholder="Ask a question..."
+                disabled={loading} // Disable input field when loading
+              />
+              <button
+                onClick={handleSendMessage}
+                className="p-3 bg-green-600 hover:bg-green-500 text-white rounded-r-lg transition duration-200 ease-in-out"
+                disabled={loading} 
+              >
+                Send
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

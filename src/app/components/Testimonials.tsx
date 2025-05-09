@@ -1,5 +1,5 @@
 // src/components/Testimonials.tsx
-export default function Testimonials() {
+export  function Testimonials() {
   return (
     <section className="py-20 px-6 bg-blue-100 text-center">
       <h2 className="text-3xl font-bold mb-8 text-gray-800">
@@ -22,4 +22,5 @@ export default function Testimonials() {
       </div>
     </section>
   );
+  1
 }

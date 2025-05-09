@@ -1,27 +1,28 @@
 "use client"; // <-- Add this line at the top
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes"; // Make sure you have 'next-themes' installed
+import { useTheme } from "../hooks";
 
-export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [isToggled, setIsToggled] = useState(theme === "dark");
-
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
-    setTheme(isToggled ? "light" : "dark");
-  };
+export function ThemeToggle() {
+  const [theme, toggleTheme] = useTheme();
 
   return (
     <motion.button
-      onClick={handleToggle}
-      initial={{ scale: 0 }}
+      onClick={() => toggleTheme()}
+      initial={{ scale: 0.8 }}
       animate={{ scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="p-3 bg-gray-800 text-white rounded-full dark:bg-gray-300 dark:text-gray-800"
+      className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50"
     >
-      {isToggled ? "🌙" : "🌞"}
+      <motion.span
+        key={theme}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="text-2xl"
+      >
+        {theme === 'light' ? "🌙" : "🌞"}
+      </motion.span>
     </motion.button>
   );
 }

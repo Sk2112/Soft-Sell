@@ -1,11 +1,6 @@
-import HeroSection from './components/HeroSection';
-import ContactForm from './components/ContactForm';
-import Testimonials from './components/Testimonials';
-import WhyChooseUs from './components/WhyChooseUs';
+import { ChatWidget, ContactForm, HeroSection, HowItWorks, Testimonials, ThemeToggle, WhyChooseUs } from "./components";
 
-import HowItWorks from './components/HowitWorks';
-import ThemeToggle from './components/ThemeToggle';
-import ChatWidget from './components/ChatWidget';
+
 
 export default function Home() {
   return (
@@ -20,3 +15,5 @@ export default function Home() {
     </main>
   );
 }
+
+
