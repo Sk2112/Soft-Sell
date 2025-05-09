@@ -1,4 +1,4 @@
-import { ChatWidget, ContactForm, HeroSection, HowItWorks, Testimonials, ThemeToggle, WhyChooseUs } from "./components";
+import { ChatWidget, ContactForm, HeroSection, HowItWorks, Testimonials, WhyChooseUs } from "./components";
 import { ModeToggle } from "./components/ThemeToggle";
 
 

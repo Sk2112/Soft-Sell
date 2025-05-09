@@ -1,12 +1,10 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { useTheme } from "../hooks";
 
 export function HeroSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: false, margin: "-100px 0px" });
-  const [theme, toggleTheme] = useTheme(); 
 
   return (
     <motion.section

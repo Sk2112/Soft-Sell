@@ -1,4 +1,4 @@
-// hooks/useBotResponse.js
+// hooks/useBotResponse.ts
 import { useState } from "react";
 
 const GEMINI_API_KEY = "AIzaSyAB3toCXdUR7jayMNakvMbY8mkv3jeUlfo"; // Move to env in production
@@ -7,7 +7,7 @@ export function useFetchBot() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const fetchBotResponse = async (userMessage :string) => {
+  const fetchBotResponse = async (userMessage: string) => {
     setLoading(true);
     setError("");
 
@@ -34,6 +34,7 @@ export function useFetchBot() {
 
       return botText;
     } catch (err) {
+      console.error("Fetch error:", err); // ✅ added console log
       setError("Failed to fetch response.");
       return "Something went wrong.";
     } finally {
