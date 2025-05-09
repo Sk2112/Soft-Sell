@@ -52,12 +52,13 @@
 
 ## 🕒 Time Spent
 
-🧠 This project was completed in approximately **3 hours**, including:
+🧠 This project was completed in approximately ** 6**, including:
 
 - Planning layout and component structure
 - Writing modular and clean code
 - Adding visual polish and animations
 - Testing responsiveness and UI consistency
+- Solving the api response error 
 
 
 
