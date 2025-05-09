@@ -22,10 +22,10 @@ export function HowItWorks() {
       ref={ref}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      className="py-20 px-6 bg-gray-100 text-center"
+      className="py-20 px-6 bg-gray-100 dark:bg-gray-900 text-center"
     >
       <motion.h2
-        className="text-3xl font-bold mb-8 text-gray-800"
+        className="text-3xl font-bold mb-8 text-gray-800 dark:text-white"
         initial={{ opacity: 0, y: 40 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.6 }}
@@ -38,7 +38,7 @@ export function HowItWorks() {
             key={i}
             custom={i}
             variants={itemVariants}
-            className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md"
+            className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md dark:shadow-gray-700/40 transition-colors duration-300"
           >
             <Image src={src} alt={`Icon ${i}`} className="w-16 h-16 mb-4" />
             <p className="text-gray-700">
