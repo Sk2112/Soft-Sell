@@ -2,7 +2,7 @@
 
 **SoftSell** is a responsive, single-page marketing website built for a fictional software license resale startup. Designed with performance and aesthetics in mind, it showcases clean design, smooth animations, and interactive UI elements.
 
-![SoftSell Screenshot](public/preview.png) 
+ 
 
 
 ![Screenshot 2025-05-09 233011](https://github.com/user-attachments/assets/a7a6e384-eba8-4141-ad68-73d1b9d26a7c)
