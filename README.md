@@ -52,7 +52,7 @@
 
 ## 🕒 Time Spent
 
-🧠 This project was completed in approximately 6 hours, including:
+🧠 This project was completed in approximately 3 hours, including:
 
 - Planning layout and component structure
 - Writing modular and clean code
