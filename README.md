@@ -4,9 +4,10 @@
 
  
 
-
+1. Light Mode
 ![Screenshot 2025-05-09 233011](https://github.com/user-attachments/assets/a7a6e384-eba8-4141-ad68-73d1b9d26a7c)
 
+2. Dark Mode 
 ![Screenshot 2025-05-09 233027](https://github.com/user-attachments/assets/9bcb943f-704d-45d5-9b39-c8b40c18b8f9)
 
 
@@ -49,7 +50,7 @@
 - **Consistent section layout** for better readability
 
 
-
+---
 ## 🕒 Time Spent
 
 🧠 This project was completed in approximately 3 hours, including:
@@ -60,27 +61,37 @@
 - Testing responsiveness and UI consistency
 - Solving the api response error 
 
-
+---
 
 ## ⚙️ Setup Instructions
 
-1. **Clone the repo:**
+1. Clone the repo:
+   
+   ```bash
+   git clone https://github.com/Sk2112/Soft-Sell.git
+   cd Soft-Sell
+   ```
 
-`bash
-git clone https://github.com/Sk2112/Soft-Sell.git
-cd Soft-Sell
+2. Download required dependencies:
+   ``` bash
+    npm install
+   ```
+3. Run the Project on Server:
+   ``` bash
+   npm run dev
+   ```
+---
+## 📁 Folder Structure
 
-## Folder Structure
-.
 ├── public/              
 ├── src/
-│   ├── components/      # Reusable UI components
-│   └── app/             # Main layout and page entry (Next.js App Router)
+│   ├── components/      
+│   └── app/             
 ├── tailwind.config.js
 └── next.config.js
 
 
-## Open in browser:
+## 🌐 Open in browser:
 Visit http://localhost:3000 to view the app.
 
 
